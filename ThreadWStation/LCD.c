@@ -79,7 +79,6 @@ int setup_Serial()
 	if (g_Fd == -1)
 	{
 		perror("Error - Unable to open UART!\n");
-		return -1;
 	}
 
 	struct termios options;
@@ -89,7 +88,6 @@ int setup_Serial()
 	if(error == -1)
 	{
 		perror("tcgetattr error!\n");
-		return -1;
 	}
 
 	options.c_cflag = B9600 | CS8 | CLOCAL | CREAD; //Baud rate 9600, Character size mask CS8, Ignore modem control lines, Enable receiver
@@ -104,7 +102,6 @@ int setup_Serial()
 	if(error == -1)
 	{
 		perror("tcflush error!\n");
-		return -1;
 	}
 
 	/* Apply the configuration */
@@ -112,7 +109,6 @@ int setup_Serial()
 	if(error == -1)
 	{
 		perror("tcsetattr error!\n");
-		return -1;
 	}
 
 	/* Create custom made characters */
@@ -327,7 +323,8 @@ int printLongString_LCD(const char *pstring, const size_t len)
 			data[0] = 0x01;
 			for(i = 1 ; i < (len+1) ; i++)
 			{
-				data[i] = pstring[i-1];
+				//data[i] = pstring[i-1];
+				data[i] = *pstring++;
 			}
 
 			data[len+1] = '\0';
@@ -353,7 +350,7 @@ int printLongString_LCD(const char *pstring, const size_t len)
 			data[0] = 0x01;
 			for(i = 1 ; i < 17 ; i++)
 			{
-				data[i] = pstring[i-1];
+				data[i] = *pstring++;
 			}
 
 			data[17] = '\0';
@@ -372,7 +369,7 @@ int printLongString_LCD(const char *pstring, const size_t len)
 			data2[0] = 0x01;
 			for(i = 1 ; i < (len-15) ; i++)
 			{
-				data2[i] = pstring[(i+16)-1];
+				data2[i] = *pstring++;
 			}
 
 			data2[(len-15)] = '\0';
@@ -400,7 +397,7 @@ int printLongString_LCD(const char *pstring, const size_t len)
 			data[0] = 0x01;
 			for(i = 1 ; i < 17 ; i++)
 			{
-				data[i] = pstring[i-1];
+				data[i] = *pstring++;
 			}
 
 			data[17] = '\0';
@@ -419,7 +416,7 @@ int printLongString_LCD(const char *pstring, const size_t len)
 			data2[0] = 0x01;
 			for(i = 1 ; i < 17 ; i++)
 			{
-				data2[i] = pstring[(i+16)-1];
+				data2[i] = *pstring++;
 			}
 
 			data2[17] = '\0';
@@ -438,7 +435,7 @@ int printLongString_LCD(const char *pstring, const size_t len)
 			data3[0] = 0x01;
 			for(i = 1 ; i < (len-31) ; i++)
 			{
-				data3[i] = pstring[(i+32)-1];
+				data3[i] = *pstring++;
 			}
 			data3[len-31] = '\0';
 			data3[len-31+1] = 0xFF;
@@ -466,7 +463,7 @@ int printLongString_LCD(const char *pstring, const size_t len)
 			data[0] = 0x01;
 			for(i = 1 ; i < 17 ; i++)
 			{
-				data[i] = pstring[i-1];
+				data[i] = *pstring++;
 			}
 
 			data[17] = '\0';
@@ -485,7 +482,7 @@ int printLongString_LCD(const char *pstring, const size_t len)
 			data2[0] = 0x01;
 			for(i = 1 ; i < 17 ; i++)
 			{
-				data2[i] = pstring[(i+16)-1];
+				data2[i] = *pstring++;
 			}
 
 			data2[17] = '\0';
@@ -504,7 +501,7 @@ int printLongString_LCD(const char *pstring, const size_t len)
 			data3[0] = 0x01;
 			for(i = 1 ; i < 17 ; i++)
 			{
-				data3[i] = pstring[(i+32)-1];
+				data3[i] = *pstring++;
 			}
 			data3[17] = '\0';
 			data3[18] = 0xFF;
@@ -522,7 +519,7 @@ int printLongString_LCD(const char *pstring, const size_t len)
 			data4[0] = 0x01;
 			for(i = 1 ; i < (len-47) ; i++)
 			{
-				data4[i] = pstring[(i+48)-1];
+				data4[i] = *pstring++;
 			}
 			data4[(len-47)] = '\0';
 			data4[(len-47)+1] = 0xFF;
@@ -554,7 +551,7 @@ int printString_LCD(const char *pstring, const size_t len)
 
 	for(i = 1 ; i < (len+1) ; i++)
 	{
-		sData[i] = pstring[i-1];
+		sData[i] = *pstring++;
 	}
 
 	sData[len+1] = '\0';
@@ -579,7 +576,7 @@ static int printTemperature(const char *pstring, const size_t len)
 
 	for(i = 1 ; i < (len+1) ; i++)
 	{
-		sTdata[i] = pstring[i-1];
+		sTdata[i] = *pstring++;
 	}
 
 	sTdata[len+1] = 'C';
@@ -604,7 +601,7 @@ static int printPressure(const char *pstring, const size_t len)
 
 	for(i = 1 ; i < (len+1) ; i++)
 	{
-		sTdata[i] = pstring[i-1];
+		sTdata[i] = *pstring++;
 	}
 
 	sTdata[len+1] = 'h';
@@ -631,7 +628,7 @@ static int printAltitude(const char *pstring, const size_t len)
 
 	for(i = 1 ; i < (len+1) ; i++)
 	{
-		sTdata[i] = pstring[i-1];
+		sTdata[i] = *pstring++;
 	}
 
 	sTdata[len+1] = 'm';
@@ -656,7 +653,7 @@ static int printHumidity(const char *pstring, const size_t len)
 
 	for(i = 1 ; i < (len+1) ; i++)
 	{
-		sTdata[i] = pstring[i-1];
+		sTdata[i] = *pstring++;
 	}
 
 	sTdata[len+1] = '%';
