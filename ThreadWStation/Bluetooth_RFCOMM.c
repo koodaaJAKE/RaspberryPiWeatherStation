@@ -17,9 +17,9 @@ int bluetoothRFCOMM_Client(thread_data_t *sensorData)
     int max_rsp, num_rsp;
     int dev_id, sock, len, flags;
     int i, UserInput;
-    char addr[18] = { 0 };
-    char addr_array[NUMBER_OF_ADDRESSES][LENGTH_OF_BLTADDR];
-    char name[248] = { 0 };
+    char bluetoothAddress[LENGTH_OF_BLTADDR] = { 0 };
+    char bluetoothAddressArray[NUMBER_OF_ADDRESSES][LENGTH_OF_BLTADDR];
+    char bluetoothDeviceName[LENGTH_OF_BLTNAME] = { 0 };
 
     /*
      * UUID:
@@ -85,19 +85,19 @@ int bluetoothRFCOMM_Client(thread_data_t *sensorData)
     if(num_rsp > 0)
     {
     	for (i = 0; i < num_rsp; i++) {
-    		ba2str(&(ii+i)->bdaddr, addr);
-    		memset(name, 0, sizeof(name));
+    		ba2str(&(ii+i)->bdaddr, bluetoothAddress);
+    		memset(bluetoothDeviceName, 0, sizeof(bluetoothDeviceName));
 
-    		if (hci_read_remote_name(sock, &(ii+i)->bdaddr, sizeof(name),
-    				name, 0) < 0)
-    			strcpy(name, "[unknown]");
+    		if (hci_read_remote_name(sock, &(ii+i)->bdaddr, sizeof(bluetoothDeviceName),
+    				bluetoothDeviceName, 0) < 0)
+    			strcpy(bluetoothDeviceName, "[unknown]");
 
     		/***************************************/
     		/* Copy the address string to an array */
     		/* of strings of addresses (2D array)  */
     		/***************************************/
-    		strcpy(addr_array[i], addr);
-    		printf("%d. Device: %s  %s \n", i+1, addr, name);
+    		strcpy(bluetoothAddressArray[i], bluetoothAddress);
+    		printf("%d. Device: %s  %s \n", i+1, bluetoothAddress, bluetoothDeviceName);
     	}
 
     	printf("\n*********************************************\n");
@@ -108,7 +108,7 @@ int bluetoothRFCOMM_Client(thread_data_t *sensorData)
         /*
          * Start the Bluetooth RFCOMM Client service and pass it the chosen Bluetooth device address
          */
-        bluetoothRFCOMM_ClientConnect(addr_array[UserInput-1], svc_uuid_int, sensorData);
+        bluetoothRFCOMM_ClientConnect(bluetoothAddressArray[UserInput-1], svc_uuid_int, sensorData);
     }
     else
     {
