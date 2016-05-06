@@ -323,7 +323,6 @@ int printLongString_LCD(const char *pstring, const size_t len)
 			data[0] = 0x01;
 			for(i = 1 ; i < (len+1) ; i++)
 			{
-				//data[i] = pstring[i-1];
 				data[i] = *pstring++;
 			}
 
