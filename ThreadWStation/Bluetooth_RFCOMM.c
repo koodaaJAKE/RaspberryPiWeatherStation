@@ -18,7 +18,7 @@ int bluetoothRFCOMM_Client(thread_data_t *sensorData)
     int dev_id, sock, len, flags;
     int i, UserInput;
     char addr[18] = { 0 };
-    char addr_array[NUMBER_OF_ADDRESSES][19];
+    char addr_array[NUMBER_OF_ADDRESSES][LENGTH_OF_BLTADDR];
     char name[248] = { 0 };
 
     /*
@@ -37,11 +37,11 @@ int bluetoothRFCOMM_Client(thread_data_t *sensorData)
         exit(1);
     }
 
-    /**************************************************************************/
-    /* Once the program has chosen which adapter to use in scanning for nearby*/
-    /* devices, it must allocate resources to use that adapter. This can be   */
-    /* done with the hci_open_dev function.                                   */
-    /**************************************************************************/
+    /*
+     * Once the program has chosen which adapter to use in scanning for nearby devices,
+     * it must allocate resources to use that adapter. This can be done with the
+     * hci_open_dev function.
+     */
     sock = hci_open_dev( dev_id );
     if (sock < 0) {
         perror("hci_open_dev error: \n");
