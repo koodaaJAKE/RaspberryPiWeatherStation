@@ -34,7 +34,7 @@ typedef enum
 	READ_SENSOR_DATA			   = 0x03,
 	RANDOM_TEXT					   = 0x04,
 	CLEAR_SCREEN				   = 0x05,
-} BluetoothMessageCommands;
+} BluetoothMessageCommand;
 
 /* Function prototypes */
 int bluetoothRFCOMM_Client(thread_data_t *sensorData);
