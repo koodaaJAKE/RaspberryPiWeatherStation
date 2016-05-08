@@ -5,6 +5,7 @@
  * to bit bang the I2C bus.
  */
 #include "BitBangMPL.h"
+#include "MPL3115A2.h"
 
 /* Static function declarations */
 static void MPL3115A2_InitPins(void);
@@ -374,7 +375,7 @@ static void setOverSampleRate(unsigned char sampleRate)
 
 static void enableEventFlags(void)
 {
-	setRegister(MPL3115A2_PT_DATA_CFG, 0x07);
+	setRegister(MPL3115A2_PT_DATA_CFG, ENABLE_EVENT_FLAGS);
 }
 
 /***************************************************************/

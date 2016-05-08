@@ -3,7 +3,7 @@
  */
 #include "LCD.h"
 #include "BitBangMPL.h"
-#include "MPL3115A2.h"
+//#include "MPL3115A2.h"
 #include "MCP3002SPI.h"
 #include "thread.h"
 #include "locale.h"
