@@ -18,11 +18,11 @@
 #include <errno.h>
 #include "thread.h"
 
-#define NUMBER_OF_ADDRESSES 10
-#define LENGTH_OF_BLTADDR	18
-#define LENGTH_OF_BLTNAME	40
+#define NUMBER_OF_ADDRESSES 		10
+#define LENGTH_OF_BLTADDR			18
+#define LENGTH_OF_BLTNAME			40
 
-#define FRAME_END_CHAR				   0xEE
+#define FRAME_END_CHAR				0xEE
 
 typedef enum { false, true } bool;
 
