@@ -249,7 +249,7 @@ static int bluetoothRFCOMM_ClientConnect(const char *target_addr, const uint8_t 
 
 		switch(recvBuffer[0]){
 
-			case BLUETOOTH_SOCKET_CLOSE_COMMAND:
+			case BLUETOOTH_SOCKET_CLOSE:
 
 				socketCloseFlag = true;
 				printf("Closing the socket...\n");
@@ -410,7 +410,7 @@ int bluetoothRFCOMM_Server(thread_data_t *sensorData)
 
 		switch(recvBuffer[0]){
 
-			case BLUETOOTH_SOCKET_CLOSE_COMMAND:
+			case BLUETOOTH_SOCKET_CLOSE:
 
 				socketCloseFlag = true;
 				printf("Closing the socket...\n");
