@@ -390,7 +390,6 @@ int bluetoothRFCOMM_Server(thread_data_t *sensorData)
 	FD_SET(sock, &writeFD);
 	select(sock+1, &readFD, &writeFD, NULL, &timeOut);
 
-	int i = 20;
 	client = accept(sock, (struct sockaddr *)&rem_addr, &opt);
 	if(client < 0 && errno != EINPROGRESS) {
 		perror("Couldn't accept connection: \n");
@@ -399,12 +398,6 @@ int bluetoothRFCOMM_Server(thread_data_t *sensorData)
 
 	if(client >= 0) {
 		printf("accept() returned %d\n", client);
-	}
-	else {
-		while(i >= 0) {
-			printf("%d seconds left... \n", i);
-			i--;
-		}
 	}
 
 	ba2str(&rem_addr.rc_bdaddr, buffer);
