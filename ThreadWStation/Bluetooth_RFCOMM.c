@@ -11,6 +11,11 @@
 static int bluetoothRFCOMM_ClientConnect(const char *target_addr, const uint8_t svc_uuid_int[], thread_data_t *sensorData);
 static sdp_session_t *registerService(const uint8_t rfcomm_channel);
 
+/***********************************************************************************************/
+/* This function scans the nearby Bluetooth devices and lets the user choose which device      */
+/* connect to and then calls the actual Bluetooth client connect function and passes the       */
+/* chosen Bluetooth device address to it                                                       */
+/***********************************************************************************************/
 int bluetoothRFCOMM_Client(thread_data_t *sensorData)
 {
 	inquiry_info *ii = NULL;
@@ -418,6 +423,7 @@ int bluetoothRFCOMM_Server(thread_data_t *sensorData)
 
 	/* Set it back to blocking mode */
 	fcntl(sock, F_SETFL, flags &~ O_NONBLOCK);
+
 	/*
 	 * Wait for data until the socketCloseFlag is set to end the transaction and close the socket connection
 	 */
