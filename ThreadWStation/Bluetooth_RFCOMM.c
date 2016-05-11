@@ -80,6 +80,7 @@ int bluetoothRFCOMM_Client(thread_data_t *sensorData)
     	exit(1);
     }
 
+    printf("\n Detected Bluetooth devices: \n");
     /******************************************************************************/
     /* Once a list of nearby Bluetooth devices and their addresses has been found,*/
     /* the program determines the user-friendly names associated with those       */
@@ -254,8 +255,8 @@ static int bluetoothRFCOMM_ClientConnect(const char *target_addr, const uint8_t 
 			case BLUETOOTH_SOCKET_CLOSE:
 
 				socketCloseFlag = true;
+				printDisconnect();
 				printf("Closing the socket...\n");
-				sleep(1);
 				break;
 
 			case PRINT_HELLO:
