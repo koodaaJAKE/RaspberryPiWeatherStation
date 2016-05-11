@@ -32,8 +32,4 @@ void printHumidity_LCD(const float humidity);
 int printConnect(void);
 int printDisconnect(void);
 
-
-
-
-
 #endif /* LCD_H_ */

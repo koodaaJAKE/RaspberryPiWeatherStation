@@ -329,7 +329,7 @@ static int bluetoothRFCOMM_ClientConnect(const char *target_addr, const uint8_t 
 
 int bluetoothRFCOMM_Server(thread_data_t *sensorData)
 {
-	int port = 3, result, sock, client, bytes_read, bytes_sent;
+	int port = 3, result, sock, client, bytes_read, bytes_sent, retValue;
 	struct sockaddr_rc loc_addr = { 0 }, rem_addr = { 0 };
 	char buffer[1024] = { 0 };
 	socklen_t opt = sizeof(rem_addr);
@@ -337,14 +337,14 @@ int bluetoothRFCOMM_Server(thread_data_t *sensorData)
 	unsigned char *serializationLengthPtr;
 
 	/* Set the timeout value to 30 seconds for the select function */
-    struct timeval timeOut;
-    timeOut.tv_sec = 30;
-    timeOut.tv_usec = 0;
+	struct timeval timeOut;
+	timeOut.tv_sec = 30;
+	timeOut.tv_usec = 0;
 
-    /* Initialize the fd set for the select function */
-    fd_set readFD, writeFD;
-    FD_ZERO(&readFD);
-    FD_ZERO(&writeFD);
+	/* Initialize the fd set for the select function */
+	fd_set readFD, writeFD;
+	FD_ZERO(&readFD);
+	FD_ZERO(&writeFD);
 
 	/* Local Bluetooth adapter */
 	loc_addr.rc_family = AF_BLUETOOTH;
@@ -385,10 +385,21 @@ int bluetoothRFCOMM_Server(thread_data_t *sensorData)
 	/* Accept one connection */
 	printf("Waiting for client to connect... timeouts in 30 seconds \n");
 
-	/* Set the current socket fd to the fd set and call select */
+	/* Initialize the current socket fd to the fd set and call select */
 	FD_SET(sock, &readFD);
 	FD_SET(sock, &writeFD);
-	select(sock+1, &readFD, &writeFD, NULL, &timeOut);
+
+	retValue = select(sock+1, &readFD, &writeFD, NULL, &timeOut);
+	if(retValue == -1) {
+		perror("select() error: \n");
+		return -1;
+	}
+	else if(retValue)
+		printf("Connected\n");
+	else {
+		printf("Connection attempt timed out\n");
+		return -1;
+	}
 
 	client = accept(sock, (struct sockaddr *)&rem_addr, &opt);
 	if(client < 0 && errno != EINPROGRESS) {
