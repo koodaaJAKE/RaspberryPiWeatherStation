@@ -13,7 +13,6 @@
 #include <string.h>
 #include <errno.h>
 
-
 /* Function prototypes */
 int setup_Serial(void);
 int serialLCD_Close(void);
