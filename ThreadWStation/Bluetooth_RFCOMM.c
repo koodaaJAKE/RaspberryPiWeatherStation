@@ -80,7 +80,7 @@ int bluetoothRFCOMM_Client(thread_data_t *sensorData)
     	exit(1);
     }
 
-    printf("\n Detected Bluetooth devices: \n");
+    printf("\nDetected Bluetooth devices: \n");
     /******************************************************************************/
     /* Once a list of nearby Bluetooth devices and their addresses has been found,*/
     /* the program determines the user-friendly names associated with those       */
@@ -235,7 +235,7 @@ static int bluetoothRFCOMM_ClientConnect(const char *target_addr, const uint8_t 
 	/*
 	 * Wait for data until the socketCloseFlag is set to end the transaction and close the socket connection
 	 */
-	while(socketCloseFlag == false) {
+	while(!socketCloseFlag) {
 
 		unsigned char recvBuffer[128] = { 0 };
 		unsigned char sendBuffer[128] = { 0 };
@@ -428,7 +428,7 @@ int bluetoothRFCOMM_Server(thread_data_t *sensorData)
 	/*
 	 * Wait for data until the socketCloseFlag is set to end the transaction and close the socket connection
 	 */
-	while(socketCloseFlag == false) {
+	while(!socketCloseFlag) {
 
 		unsigned char recvBuffer[128] = { 0 };
 		unsigned char sendBuffer[128] = { 0 };
