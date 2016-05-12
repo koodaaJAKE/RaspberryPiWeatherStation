@@ -6,7 +6,6 @@
 #define PTHREAD_H_
 
 #include <pthread.h>
-#include <stdio.h>
 #include <termios.h>
 #include <signal.h>
 

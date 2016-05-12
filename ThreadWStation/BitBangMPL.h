@@ -6,8 +6,6 @@
 #define BITBANGMPL_H_
 
 #include <bcm2835.h>
-#include <unistd.h>
-#include <stdio.h>
 
 // Defines
 #define	TRUE	1

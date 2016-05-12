@@ -6,9 +6,7 @@
 #define MCP3002SPI_H_
 
 #include <unistd.h>
-#include <stdint.h>
 #include <stdio.h>
-#include <errno.h>
 #include <stdlib.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>

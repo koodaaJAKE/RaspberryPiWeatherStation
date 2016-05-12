@@ -6,7 +6,6 @@
 //#include "MPL3115A2.h"
 #include "MCP3002SPI.h"
 #include "thread.h"
-#include "locale.h"
 
 /* Flag which terminates the thread while loop */
 volatile sig_atomic_t thread_loop_flag = 0;
