@@ -36,8 +36,10 @@ int main(void)
 	/* MPL3115A2 BitBang setup */
 	initMPL3115A2();
 
+#ifdef MPL3115A2_H_
 	/* MPL3115A2 setup */
-	//initMPL3115A2_I2C();
+	initMPL3115A2_I2C();
+#endif
 
 	/* LCD setup */
 	setup_Serial();
@@ -101,7 +103,9 @@ int main(void)
 	setBacklight_LCD(0);
 	serialLCD_Close();
 	spiClose();
-	//closeI2C();
+#ifdef MPL3115A2_H_
+	closeI2C();
+#endif
 	bcm2835_close();
 	free(sensorData);
 	printf("UART, BCM2835, I2C and SPI disabled!\n");
