@@ -17,59 +17,14 @@ static int printPressure(const char *pstring, const size_t len);
 static int printAltitude(const char *pstring, const size_t len);
 static int printHumidity(const char *pstring, const size_t len);
 
-/* Global static variable of serial file descriptor */
+/* Static local variable of serial file descriptor */
 static int g_Fd = 0;
 
-/* Global static variable of returned bytes of write function */
+/* Static local variable of returned bytes of write function */
 static int g_bytesWritten = 0;
 
-/* Global static variable of length of string */
+/* Static local variable of length of string */
 static size_t stringLength = 0;
-
-/* Custom made characters */
-unsigned char aWithDots[8] = {
-	0b01010,
-	0b00000,
-	0b01110,
-	0b00011,
-	0b01111,
-	0b11011,
-	0b01111,
-	0b0000
-};
-
-unsigned char oWithDots[8] = {
-	0b01010,
-	0b00000,
-	0b01110,
-	0b10001,
-	0b10001,
-	0b10001,
-	0b01110,
-	0b00000
-};
-
-unsigned char capitalAwithDots[8] = {
-	0b01010,
-	0b00000,
-	0b01110,
-	0b10001,
-	0b10001,
-	0b11111,
-	0b10001,
-	0b10001
-};
-
-unsigned char capitalOwithDots[8] = {
-	0b01010,
-	0b00000,
-	0b01110,
-	0b10001,
-	0b10001,
-	0b10001,
-	0b10001,
-	0b01110
-};
 
 /* Open serial port and set the settings */
 int setup_Serial()
@@ -189,6 +144,17 @@ static int createCharacter(const unsigned char memoryLocation, const unsigned ch
 
 static int createAwithDots(void)
 {
+	unsigned char aWithDots[8] = {
+		0b01010,
+		0b00000,
+		0b01110,
+		0b00011,
+		0b01111,
+		0b11011,
+		0b01111,
+		0b0000
+	};
+
 	if(createCharacter(0x00, aWithDots) < 0){
 		return -1;
 	}
@@ -198,6 +164,17 @@ static int createAwithDots(void)
 
 static int createOwithDots(void)
 {
+	unsigned char oWithDots[8] = {
+		0b01010,
+		0b00000,
+		0b01110,
+		0b10001,
+		0b10001,
+		0b10001,
+		0b01110,
+		0b00000
+	};
+
 	if(createCharacter(0x01, oWithDots) < 0){
 		return -1;
 	}
@@ -207,6 +184,17 @@ static int createOwithDots(void)
 
 static int createCapitalAwithDots(void)
 {
+	unsigned char capitalAwithDots[8] = {
+		0b01010,
+		0b00000,
+		0b01110,
+		0b10001,
+		0b10001,
+		0b11111,
+		0b10001,
+		0b10001
+	};
+
 	if(createCharacter(0x02, capitalAwithDots) < 0){
 		return -1;
 	}
@@ -216,6 +204,17 @@ static int createCapitalAwithDots(void)
 
 static int createCapitalOwithDots(void)
 {
+	unsigned char capitalOwithDots[8] = {
+		0b01010,
+		0b00000,
+		0b01110,
+		0b10001,
+		0b10001,
+		0b10001,
+		0b10001,
+		0b01110
+	};
+
 	if(createCharacter(0x03, capitalOwithDots) < 0){
 		return -1;
 	}

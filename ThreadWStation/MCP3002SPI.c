@@ -7,12 +7,12 @@
 
 #include "MCP3002SPI.h"
 
-/* Global static functions */
+/* Static local functions */
 static int spiWriteRead( unsigned char *data, int length);
 static void TMP36CalcTemp(int adc_value, float* tmp);
 static void HIH4030CalcHum(int adc_val, float *hum, float *temp);
 
-/* Static global SPI file descriptor variable */
+/* Static local SPI file descriptor variable */
 static int spifd;
 
 int spiOpen(void)

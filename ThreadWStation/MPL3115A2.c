@@ -25,7 +25,7 @@ static void toggleOneShot(void);
 static void clearRegisterBit(const unsigned char reg, const unsigned char bitMask);
 static void setRegisterBit(const unsigned char reg, const unsigned char bitMask);
 
-/* Static global i2c file descriptor */
+/* Static local i2c file descriptor */
 static int g_fd;
 
 /* Initializes the I2C bus and the MPL3115A2 sensor */
