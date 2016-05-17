@@ -23,6 +23,9 @@ static int g_Fd = 0;
 /* Global static variable of returned bytes of write function */
 static int g_bytesWritten = 0;
 
+/* Global static variable of length of string */
+static size_t stringLength = 0;
+
 /* Custom made characters */
 unsigned char aWithDots[8] = {
 	0b01010,
@@ -68,7 +71,7 @@ unsigned char capitalOwithDots[8] = {
 	0b01110
 };
 
-//Open serial port and set the settings
+/* Open serial port and set the settings */
 int setup_Serial()
 {
 	int error;
@@ -220,7 +223,7 @@ static int createCapitalOwithDots(void)
 		return 0;
 }
 
-//Clear the LCD screen
+/* Clear the LCD screen */
 int clear_LCD()
 {
 	unsigned char data[2];
@@ -237,7 +240,7 @@ int clear_LCD()
 	return 0;
 }
 
-//Define number of rows/columns on the display
+/* Define number of rows/columns on the display */
 int setType_LCD(const unsigned char line, const unsigned char col)
 {
 	unsigned char data[4];
@@ -256,7 +259,7 @@ int setType_LCD(const unsigned char line, const unsigned char col)
     return 0;
 }
 
-//Backlight brightness
+/* Backlight brightness */
 int setBacklight_LCD(const unsigned char brightness)
 {
 	unsigned char data[3];
@@ -274,7 +277,7 @@ int setBacklight_LCD(const unsigned char brightness)
     return 0;
 }
 
-//Position the cursor
+/* Position the cursor */
 int setCursor_LCD(const unsigned char line, const unsigned char col)
 {
 	unsigned char data[4];
@@ -293,7 +296,7 @@ int setCursor_LCD(const unsigned char line, const unsigned char col)
     return 0;
 }
 
-//Write a single character
+/* Write a single character */
 int writeChar_LCD(const unsigned char c)
 {
 	unsigned char data[3];
@@ -535,8 +538,8 @@ int printLongString_LCD(const char *pstring, const size_t len)
 		} else {
 			setCursor_LCD(2,1);
 			char tooLongString[] = "Too long string!";
-			size_t len = strlen(tooLongString);
-			printString_LCD(tooLongString, len);
+			stringLength = strlen(tooLongString);
+			printString_LCD(tooLongString, stringLength);
 			printf("Too long string\n");
 			sleep(2);
 		}
@@ -672,83 +675,82 @@ static int printHumidity(const char *pstring, const size_t len)
 	return 0;
 }
 
-//Convert float temperature to a string and print it to a lcd
 void printMPL3115A2Temperature_LCD(const float temperature)
 {
 	setCursor_LCD(2,3);
 	const char *strng = "MPL tmp is:";
-	size_t l = strlen(strng);
-	printString_LCD(strng, l);
+	stringLength = strlen(strng);
+	printString_LCD(strng, stringLength);
 
 	setCursor_LCD(3,5);
 	char buf[6];
 	snprintf(buf, sizeof(buf), "%.2f", temperature);
-	l = strlen(buf);
-	printTemperature(buf, l);
+	stringLength = strlen(buf);
+	printTemperature(buf, stringLength);
 }
 
 void printTMP36Temperature_LCD(const float temperature)
 {
 	setCursor_LCD(2,3);
 	const char *strng = "TMP36 tmp is:";
-	size_t l = strlen(strng);
-	printString_LCD(strng, l);
+	stringLength = strlen(strng);
+	printString_LCD(strng, stringLength);
 
 	setCursor_LCD(3,6);
 	char buf[6];
 	snprintf(buf, sizeof(buf), "%.2f", temperature);
-	l = strlen(buf);
-	printTemperature(buf, l);
+	stringLength = strlen(buf);
+	printTemperature(buf, stringLength);
 }
 
 void printPressure_LCD(const float pressure)
 {
 	setCursor_LCD(2,3);
 	const char *strng = "MPL pres is:";
-	size_t l = strlen(strng);
-	printString_LCD(strng, l);
+	stringLength = strlen(strng);
+	printString_LCD(strng, stringLength);
 
 	setCursor_LCD(3,4);
 	char buf[10];
 	snprintf(buf, sizeof(buf), "%.2f", pressure);
-	l = strlen(buf);
-	printPressure(buf, l);
+	stringLength = strlen(buf);
+	printPressure(buf, stringLength);
 }
 
 void printAltitude_LCD(const float altitude)
 {
 	setCursor_LCD(2,3);
 	const char *strng = "MPL alt is:";
-	size_t l = strlen(strng);
-	printString_LCD(strng, l);
+	stringLength = strlen(strng);
+	printString_LCD(strng, stringLength);
 
 	setCursor_LCD(3,4);
 	char buf[10];
 	snprintf(buf, sizeof(buf), "%.2f", altitude);
-	l = strlen(buf);
-	printAltitude(buf, l);
+	stringLength = strlen(buf);
+	printAltitude(buf, stringLength);
 }
 
 void printHumidity_LCD(const float humidity)
 {
 	setCursor_LCD(2,3);
 	const char *strng = "Humidity is:";
-	size_t l = strlen(strng);
-	printString_LCD(strng, l);
+	stringLength = strlen(strng);
+	printString_LCD(strng, stringLength);
 
 	setCursor_LCD(3,6);
 	char buf[6];
 	snprintf(buf, sizeof(buf), "%.2f", humidity);
-	l = strlen(buf);
-	printHumidity(buf, l);
+	stringLength = strlen(buf);
+	printHumidity(buf, stringLength);
 }
 
 int printConnect(void)
 {
 	setCursor_LCD(2,3);
 	const char *strng = "CONNECTED!!";
-	size_t l = strlen(strng);
-	printString_LCD(strng, l);
+	stringLength = strlen(strng);
+	printString_LCD(strng, stringLength);
 	sleep(2);
 	clear_LCD();
 	return 0;
@@ -758,8 +760,8 @@ int printDisconnect(void)
 {
 	setCursor_LCD(2,2);
 	const char *strng = "DISCONNECTED!!";
-	size_t l = strlen(strng);
-	printString_LCD(strng, l);
+	stringLength = strlen(strng);
+	printString_LCD(strng, stringLength);
 	sleep(2);
 	clear_LCD();
 	return 0;
