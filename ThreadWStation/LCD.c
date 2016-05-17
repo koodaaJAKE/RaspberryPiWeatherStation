@@ -75,10 +75,10 @@ int setup_Serial()
 
 	/* Open in write mode */
 	g_Fd = open("/dev/ttyAMA0", O_WRONLY | O_NOCTTY | O_NDELAY);
-
 	if (g_Fd == -1)
 	{
 		perror("Error - Unable to open UART!\n");
+		return -1;
 	}
 
 	struct termios options;
@@ -88,6 +88,7 @@ int setup_Serial()
 	if(error == -1)
 	{
 		perror("tcgetattr error!\n");
+		return -1;
 	}
 
 	options.c_cflag = B9600 | CS8 | CLOCAL | CREAD; //Baud rate 9600, Character size mask CS8, Ignore modem control lines, Enable receiver
@@ -102,6 +103,7 @@ int setup_Serial()
 	if(error == -1)
 	{
 		perror("tcflush error!\n");
+		return -1;
 	}
 
 	/* Apply the configuration */
@@ -109,6 +111,7 @@ int setup_Serial()
 	if(error == -1)
 	{
 		perror("tcsetattr error!\n");
+		return -1;
 	}
 
 	/* Create custom made characters */
@@ -743,7 +746,7 @@ void printHumidity_LCD(const float humidity)
 int printConnect(void)
 {
 	setCursor_LCD(2,3);
-	char strng[] = "CONNECTED!!";
+	const char *strng = "CONNECTED!!";
 	size_t l = strlen(strng);
 	printString_LCD(strng, l);
 	sleep(2);
@@ -754,7 +757,7 @@ int printConnect(void)
 int printDisconnect(void)
 {
 	setCursor_LCD(2,2);
-	char strng[] = "DISCONNECTED!!";
+	const char *strng = "DISCONNECTED!!";
 	size_t l = strlen(strng);
 	printString_LCD(strng, l);
 	sleep(2);
