@@ -149,11 +149,9 @@ static void TMP36CalcTemp(int adc_value, float* tmp)
 
 static void HIH4030CalcHum(int adc_val, float *hum, float *temp)
 {
-	float max_voltage = 3.27;
-
 	/* The max voltage value drops down 0.006705882 for each degree C over 0C.
 	   The voltage at 0C is 3.27 (corrected for zero percent voltage) */
-	max_voltage = (3.27-(0.006706*(*temp)));
+	float max_voltage = (3.27-(0.006706*(*temp)));
 	*hum = (((((float)adc_val/1023)*5) - ZERO_PERCENT_VOLTAGE)/max_voltage)*100;
 	//*hum = ((0.0004*(*h_temp)+0.149)*adc_val)-(0.0617*(*h_temp)+24.436);
 }
