@@ -7,17 +7,6 @@
 #include "MCP3002SPI.h"
 #include "thread.h"
 
-/* Flag which terminates the thread while loop */
-volatile sig_atomic_t thread_loop_flag = 0;
-
-/* Calling the SigHandler, the thread while loop ending flag is set */
-void sigHandler(int sig)
-{
-	printf("I got the signal! Exiting...\n");
-	//Set the flag to exit thread loops
-	thread_loop_flag = 1;
-}
-
 int main(void)
 {
 	/* Structure of sensor measurement data */
@@ -27,6 +16,7 @@ int main(void)
 	pthread_t measureMPL3115A2Thread, measureMCP3002Thread, printToLCDThread, bluetoothRFCOMMThread;
 	int iret, iret1, iret2, iret3;
 
+	/* Initialize the signal handler */
 	signal(SIGINT, sigHandler);
 
 	/* Initialize the Raspberry Pi GPIO */

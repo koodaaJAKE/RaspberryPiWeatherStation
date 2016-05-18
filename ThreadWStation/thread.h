@@ -9,9 +9,6 @@
 #include <termios.h>
 #include <signal.h>
 
-//Flag to terminate the thread loop
-extern volatile sig_atomic_t thread_loop_flag;
-
 typedef struct thread_data
 {
 	float MPL3115A2temperature;
@@ -28,6 +25,7 @@ typedef struct thread_data
 }thread_data_t;
 
 /* Function prototypes */
+void sigHandler(int sig);
 int initMutex(thread_data_t *init_mutex_t);
 void *measureMPL3115A2(void *arg);
 void *measureMCP3002(void *arg);

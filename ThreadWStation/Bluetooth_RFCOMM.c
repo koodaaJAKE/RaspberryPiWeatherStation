@@ -128,12 +128,10 @@ static int bluetoothRFCOMM_ClientConnect(const char *target_addr, const uint8_t 
 {
 	int bytes_read, bytes_sent, s, channel = 0, status = 0;
     uuid_t svc_uuid;
-    //bdaddr_t target;
     sdp_list_t *response_list = NULL, *search_list, *attrid_list;
     sdp_session_t *session = 0;
-    bool socketCloseFlag = false;
-
 	unsigned char *serializationLengthPtr;
+	bool socketCloseFlag = false;
 	struct sockaddr_rc addr = { 0 };
 
     str2ba( target_addr, &addr.rc_bdaddr );
@@ -339,8 +337,8 @@ int bluetoothRFCOMM_Server(thread_data_t *sensorData)
 	struct sockaddr_rc loc_addr = { 0 }, rem_addr = { 0 };
 	char buffer[1024] = { 0 };
 	socklen_t opt = sizeof(rem_addr);
-	bool socketCloseFlag = false;
 	unsigned char *serializationLengthPtr;
+	bool socketCloseFlag = false;
 
 	/* Set the timeout value to 30 seconds for the select function */
 	struct timeval timeOut;
