@@ -12,6 +12,10 @@ int main(void)
 	/* Structure of sensor measurement data */
 	thread_data_t *sensorData;
 	sensorData = malloc(sizeof(thread_data_t));
+	if(sensorData == NULL) {
+		perror("malloc error: \n");
+		return -1;
+	}
 
 	pthread_t measureMPL3115A2Thread, measureMCP3002Thread, printToLCDThread, bluetoothRFCOMMThread;
 	int iret, iret1, iret2, iret3;
