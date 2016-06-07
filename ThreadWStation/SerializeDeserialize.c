@@ -38,7 +38,7 @@ unsigned int Serialize754Float(float f, unsigned int bits, unsigned int expbits)
     int sign, exp, significand;
     unsigned int significandbits = bits - expbits - 1; // -1 for sign bit
 
-    if (f == 0.0) return 0; // get this special case out of the way
+    if (f == 0.0) return 0;
 
     // check sign and begin normalization
     if (f < 0) {
