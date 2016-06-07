@@ -41,26 +41,22 @@ unsigned int Serialize754Float(float f, unsigned int bits, unsigned int expbits)
     if (f == 0.0) return 0; // get this special case out of the way
 
     // check sign and begin normalization
-    if (f < 0)
-    {
+    if (f < 0) {
     	sign = 1;
     	fnorm = -f;
     }
-    else
-    {
+    else {
     	sign = 0;
     	fnorm = f;
     }
 
     // get the normalized form of f and track the exponent
     shift = 0;
-    while(fnorm >= 2.0)
-    {
+    while(fnorm >= 2.0) {
     	fnorm /= 2.0;
     	shift++;
     }
-    while(fnorm < 1.0)
-    {
+    while(fnorm < 1.0) {
     	fnorm *= 2.0;
     	shift--;
     }
@@ -93,8 +89,14 @@ float Deserialize754Float(unsigned int f, unsigned int bits, unsigned int expbit
 	// deal with the exponent
 	bias = (1<<(expbits-1)) - 1;
 	shift = ((f>>significandbits)&((1 <<expbits)-1)) - bias;
-	while(shift > 0) { result *= 2.0; shift--; }
-	while(shift < 0) { result /= 2.0; shift++; }
+	while(shift > 0) {
+		result *= 2.0;
+		shift--;
+	}
+	while(shift < 0) {
+		result /= 2.0;
+		shift++;
+	}
 
 	// sign it
 	result *= (f>>(bits-1))&1? -1.0: 1.0;

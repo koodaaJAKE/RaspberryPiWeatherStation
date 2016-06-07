@@ -7,7 +7,7 @@
 
 #include "thread.h"
 
-/* Macros for serializing 32bit float */
+/* Macros for serializing and deserializing 32bit float */
 #define Serialize754_32(f) (Serialize754Float((f), 32, 8))
 #define Deserialize754_32(f) (Deserialize754Float((f), 32, 8))
 
