@@ -10,12 +10,7 @@
 int main(void)
 {
 	/* Structure of sensor measurement data */
-	thread_data_t *sensorData;
-	sensorData = malloc(sizeof(thread_data_t));
-	if(sensorData == NULL) {
-		perror("malloc error: \n");
-		return -1;
-	}
+	thread_data_t sensorData;
 
 	pthread_t measureMPL3115A2Thread, measureMCP3002Thread, printToLCDThread, bluetoothRFCOMMThread;
 	int iret, iret1, iret2, iret3;
@@ -45,7 +40,7 @@ int main(void)
 	spiOpen();
 
 	/* Initialize mutex */
-	initMutex(sensorData);
+	initMutex(&sensorData);
 
 	printf("**************************************************\n");
 	printf("Print MPL3115A2 temperature by pressing t         \n");
@@ -59,28 +54,28 @@ int main(void)
 	/************************************************************/
 	/* Create Threads                                           */
 	/************************************************************/
-	iret = pthread_create(&measureMPL3115A2Thread, NULL, measureMPL3115A2, (void*)sensorData);
+	iret = pthread_create(&measureMPL3115A2Thread, NULL, measureMPL3115A2, (void*)&sensorData);
 	if(iret)
 	{
 		fprintf(stderr, "Error - pthread_create() return code: %d\n", iret);
 		exit(EXIT_FAILURE);
 	}
 
-	iret1 = pthread_create(&measureMCP3002Thread, NULL, measureMCP3002, (void*)sensorData);
+	iret1 = pthread_create(&measureMCP3002Thread, NULL, measureMCP3002, (void*)&sensorData);
 	if(iret1)
 	{
 		fprintf(stderr, "Error - pthread_create() return code: %d\n", iret1);
 		exit(EXIT_FAILURE);
 	}
 
-	iret2 = pthread_create(&printToLCDThread, NULL, printToLCD, (void*)sensorData);
+	iret2 = pthread_create(&printToLCDThread, NULL, printToLCD, (void*)&sensorData);
 	if(iret2)
 	{
 		fprintf(stderr, "Error - pthread_create() return code: %d\n", iret2);
 		exit(EXIT_FAILURE);
 	}
 
-	iret3 = pthread_create(&bluetoothRFCOMMThread, NULL, bluetoothRFCOMM, (void*)sensorData);
+	iret3 = pthread_create(&bluetoothRFCOMMThread, NULL, bluetoothRFCOMM, (void*)&sensorData);
 	if(iret3)
 	{
 		fprintf(stderr, "Error - pthread_create() return code: %d\n", iret3);
@@ -101,7 +96,6 @@ int main(void)
 	closeI2C();
 #endif
 	bcm2835_close();
-	free(sensorData);
 	printf("UART, BCM2835, I2C and SPI disabled!\n");
 	return 0;
 }
