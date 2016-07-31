@@ -10,6 +10,7 @@ C_SRCS += \
 ../MCP3002SPI.c \
 ../MPL3115A2.c \
 ../SerializeDeserialize.c \
+../TCP_Socket.c \
 ../main.c \
 ../thread.c 
 
@@ -20,6 +21,7 @@ OBJS += \
 ./MCP3002SPI.o \
 ./MPL3115A2.o \
 ./SerializeDeserialize.o \
+./TCP_Socket.o \
 ./main.o \
 ./thread.o 
 
@@ -30,6 +32,7 @@ C_DEPS += \
 ./MCP3002SPI.d \
 ./MPL3115A2.d \
 ./SerializeDeserialize.d \
+./TCP_Socket.d \
 ./main.d \
 ./thread.d 
 

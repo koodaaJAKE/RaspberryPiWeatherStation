@@ -111,3 +111,11 @@ unsigned char *serializeStruct(unsigned char *buffer, const thread_data_t *Data)
 	return buffer;
 }
 
+unsigned char *serializeStruct2(unsigned char *buffer, const thread_data_t *Data)
+{
+	buffer = serializeFloat(buffer, Data->minMPL3115A2temperature);
+	buffer = serializeFloat(buffer, Data->maxMPL3115A2temperature);
+	buffer = serializeFloat(buffer, Data->minHumidity);
+	buffer = serializeFloat(buffer, Data->maxHumidity);
+	return buffer;
+}

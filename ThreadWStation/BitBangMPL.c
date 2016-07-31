@@ -261,7 +261,7 @@ void readPressure(float *pressure)
 	/* Division by 100 (multiplication by 0,01) to show the pressure in hPa */
 }
 
-void readTemperature(float *temperature)
+void readTemperature(thread_data_t *MPL3115A2_Data)
 {
 	const unsigned char overSampleRate = 1;
 	setModeStandby();
@@ -294,7 +294,18 @@ void readTemperature(float *temperature)
 	/* Get temperature, the 12-bit temperature measurement in °C is comprised of a signed integer component and a fractional
 	   component. The signed 8-bit integer component is located in RawData[3].
 	   The fractional component is located in bits 7-4 of RawData[4]. Bits 3-0 of OUT_T_LSB are not used. */
-	*temperature = (float) ((short)((tData[0] << 8) | (tData[1] & 0xF0)) >> 4) * 0.0625;
+	MPL3115A2_Data->MPL3115A2temperature = (float) ((short)((tData[0] << 8) | (tData[1] & 0xF0)) >> 4) * 0.0625;
+
+	/* Get the minimum and maximum values */
+	if(MPL3115A2_Data->MPL3115A2temperature < MPL3115A2_Data->minMPL3115A2temperature) {
+		MPL3115A2_Data->minMPL3115A2temperature = MPL3115A2_Data->MPL3115A2temperature;
+		//printf("Min temperature: %0.2f\n", MPL3115A2_Data->minMPL3115A2temperature);
+
+	}
+	if(MPL3115A2_Data->MPL3115A2temperature > MPL3115A2_Data->maxMPL3115A2temperature) {
+		MPL3115A2_Data->maxMPL3115A2temperature = MPL3115A2_Data->MPL3115A2temperature;
+		//printf("Max temperature: %0.2f\n", MPL3115A2_Data->maxMPL3115A2temperature);
+	}
 }
 
 void readAltitude(float *altitude)

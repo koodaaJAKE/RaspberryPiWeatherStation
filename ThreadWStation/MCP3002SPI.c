@@ -132,7 +132,7 @@ int spiClose(void)
     return statusVal;
 }
 
-static void TMP36CalcTemp(int adc_value, float* tmp)
+static void TMP36CalcTemp(int adc_value, float *tmp)
 {
 	//ADC Value		Temp	Volts
 	//	1			-50		0.00
@@ -156,7 +156,7 @@ static void HIH4030CalcHum(int adc_val, float *hum, float *temp)
 	//*hum = ((0.0004*(*h_temp)+0.149)*adc_val)-(0.0617*(*h_temp)+24.436);
 }
 
-void readTMP36Temperature(float *TMP36temperature)
+void readTMP36Temperature(float *temperature)
 {
 	unsigned char temperatureADCdata[2] = { 0 };
 	int ADCvalue = 0;
@@ -169,10 +169,10 @@ void readTMP36Temperature(float *TMP36temperature)
 
 	ADCvalue = (temperatureADCdata[0]<< 8) | temperatureADCdata[1]; //merge data bytes
 
-	TMP36CalcTemp(ADCvalue, TMP36temperature);
+	TMP36CalcTemp(ADCvalue, temperature);
 }
 
-void readHIH4030Humidity(float *HIH4030humidity, float *temperature)
+void readHIH4030Humidity(thread_data_t *mcp3002SPI_Data)
 {
 	unsigned char humidityADCdata[2] = { 0 };
 	int ADCvalue = 0;
@@ -185,5 +185,16 @@ void readHIH4030Humidity(float *HIH4030humidity, float *temperature)
 
 	ADCvalue = (humidityADCdata[0]<< 8) | humidityADCdata[1]; //merge data bytes
 
-	HIH4030CalcHum(ADCvalue, HIH4030humidity, temperature);
+	HIH4030CalcHum(ADCvalue, &mcp3002SPI_Data->humidity, &mcp3002SPI_Data->MPL3115A2temperature);
+
+	/* Get the minimum and maximum values */
+	if(mcp3002SPI_Data->humidity < mcp3002SPI_Data->minHumidity) {
+		mcp3002SPI_Data->minHumidity = mcp3002SPI_Data->humidity;
+		//printf("Min humidity: %0.2f\n", mcp3002SPI_Data->minHumidity);
+
+	}
+	if(mcp3002SPI_Data->humidity > mcp3002SPI_Data->maxHumidity) {
+		mcp3002SPI_Data->maxHumidity = mcp3002SPI_Data->humidity;
+		//printf("Max humidity: %0.2f\n", mcp3002SPI_Data->maxHumidity);
+	}
 }

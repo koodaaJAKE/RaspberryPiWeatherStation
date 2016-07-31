@@ -8,6 +8,7 @@
 #include <pthread.h>
 #include <termios.h>
 #include <signal.h>
+#include <float.h>
 
 typedef struct thread_data
 {
@@ -16,13 +17,17 @@ typedef struct thread_data
 	float altitude;
 	float TMP36temperature;
 	float humidity;
+	float maxMPL3115A2temperature;
+	float minMPL3115A2temperature;
+	float maxHumidity;
+	float minHumidity;
 	pthread_mutex_t mutex1;
 	pthread_mutex_t mutex2;
 	pthread_mutex_t mutex3;
 	pthread_mutex_t mutex4;
 	pthread_mutex_t mutex5;
 
-}thread_data_t;
+} thread_data_t;
 
 /* Function prototypes */
 void sigHandler(int sig);

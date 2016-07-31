@@ -17,6 +17,7 @@ unsigned char *serializeFloat(unsigned char *buffer, float FloatValue);
 unsigned int Serialize754Float(float f, unsigned int bits, unsigned int expbits);
 float Deserialize754Float(unsigned int f, unsigned int bits, unsigned int expbits);
 unsigned char *serializeStruct(unsigned char *buffer, const thread_data_t *Data);
+unsigned char *serializeStruct2(unsigned char *buffer, const thread_data_t *Data);
 
 
 #endif /* SERIALIZEDESERIALIZE_H_ */

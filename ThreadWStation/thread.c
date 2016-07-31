@@ -6,6 +6,7 @@
 #include "BitBangMPL.h"
 #include "MCP3002SPI.h"
 #include "Bluetooth_RFCOMM.h"
+#include "TCP_Socket.h"
 
 /* Static function declarations */
 static int GetKey(void);
@@ -66,7 +67,7 @@ void *measureMPL3115A2(void *arg)
 		thread_data_t *sensorData = (thread_data_t*)arg;
 
 		pthread_mutex_lock(&sensorData->mutex1);
-		readTemperature(&sensorData->MPL3115A2temperature);
+		readTemperature(sensorData);
 		pthread_mutex_unlock(&sensorData->mutex1);
 
 		pthread_mutex_lock(&sensorData->mutex2);
@@ -92,7 +93,7 @@ void *measureMCP3002(void *arg)
 		pthread_mutex_unlock(&sensorData->mutex4);
 
 		pthread_mutex_lock(&sensorData->mutex5);
-		readHIH4030Humidity(&sensorData->humidity, &sensorData->MPL3115A2temperature);
+		readHIH4030Humidity(sensorData);
 		pthread_mutex_unlock(&sensorData->mutex5);
 	}
 	pthread_exit(NULL);
@@ -177,10 +178,12 @@ void *bluetoothRFCOMM(void *arg)
 	while(!thread_loop_flag)
 	{
 		thread_data_t *sensorData = (thread_data_t*)arg;
-
+/*
 		if(bluetoothRFCOMM_Server(sensorData) == 0);
 				thread_loop_flag = 1;
-
+*/
+		if(TCP_SocketPollingServer(sensorData) <= 0);
+			thread_loop_flag = 1;
 	}
 	pthread_exit(NULL);
 }

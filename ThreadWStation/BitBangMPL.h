@@ -6,6 +6,7 @@
 #define BITBANGMPL_H_
 
 #include <bcm2835.h>
+#include "thread.h"
 
 // Defines
 #define	TRUE	1
@@ -47,7 +48,7 @@ typedef enum
 /* Function prototypes */
 void initMPL3115A2(void);
 void readPressure(float *pressure);
-void readTemperature(float *temperature);
+void readTemperature(thread_data_t *MPL3115A2_Data);
 void readAltitude(float *altitude);
 
 #endif /* BITBANGMPL_H_ */
